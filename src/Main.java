@@ -11,6 +11,7 @@ public class Main extends JFrame {
     static JButton playEasy = null;
     static JButton playHard = null;
     static JButton settings = null;
+    static JButton leaveButton = null;
 
     public static void main(String[] args) {
         try {
@@ -83,6 +84,17 @@ public class Main extends JFrame {
         return settings;
     }
 
+    public JButton getLeaveButton() {
+        if(leaveButton == null){
+            leaveButton = new JButton();
+            leaveButton.setText(language.leaveButton);
+            leaveButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
+                System.exit(0);
+            }));
+        }
+        return leaveButton;
+    }
+
     public void addToPane(final Container c){
         final JPanel pane = new JPanel();
 
@@ -93,7 +105,7 @@ public class Main extends JFrame {
         pane.add(getSettings());
 
         JPanel footer = new JPanel();
-        footer.add(Constants.getLeaveButton(language.leaveButton));
+        footer.add(getLeaveButton());
 
         final JPanel label = new JPanel();
         JLabel x = new JLabel("Jankenpon", JLabel.CENTER);
@@ -130,7 +142,6 @@ public class Main extends JFrame {
     public static String check(Player j){
         while(true) {
             String a = CustomPane.showPasswordPrompt(null, j.name + ", " + language.checkPrompt);
-            System.out.println(a);
             if(a.equals(language.rock) || a.equals(language.paper) || a.equals(language.scissors)){
                 j.setChoice(a);
                 return a;
@@ -142,7 +153,6 @@ public class Main extends JFrame {
     public static String check(Computer c){
         while(true) {
             String a = c.choose();
-            System.out.println(a);
             if(a.equals(language.rock) || a.equals(language.paper) || a.equals(language.scissors)){
                 c.setChoice(a);
                 return a;
